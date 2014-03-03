@@ -1,0 +1,44 @@
+.widget {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.075);
+    margin-bottom: 20px;
+}
+
+.widget .widget-header {
+    border-bottom: 1px solid;
+    cursor: move;
+    position: relative;
+}
+
+.widget-blue .widget-header {
+    background-color: #3399ff;
+    border-color: #bce8f1;
+}
+
+.widget-green .widget-header {
+    background-color: #46a546;
+    border-color: #b1f1b8;
+}
+
+.widget .widget-header h4{
+    margin-top: 0;
+    padding-top: 10px;
+    margin-left: 15px;
+}
+
+.widget .widget-tools {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.widget .widget-tools i{
+    cursor: pointer;
+}
+
+.ui-sortable-placeholder {
+    border: 1px dotted black;
+    visibility: visible !important;
+    height: 50px !important;
+}

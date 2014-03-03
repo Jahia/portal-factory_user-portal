@@ -1,0 +1,26 @@
+.portal_toolbar .right{
+    float: right;
+}
+
+.customize-btn {
+    margin-top: 3px;
+    margin-right: 4px;
+    margin-bottom: 0;
+}
+
+#widgetsModal .form-group{
+    margin-bottom: 10px;
+}
+
+#widgetsModal .label{
+    font-weight: bold;
+}
+
+#widgetsModal .active{
+    background-color: #f5f5f5;
+}
+
+#widgetsModal .widgets-table tr:hover{
+    background-color: #f5f5f5;
+    cursor: pointer;
+}

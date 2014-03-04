@@ -22,13 +22,39 @@
 <%--@elvariable id="nodetype" type="org.jahia.services.content.nodetypes.ExtendedNodeType"--%>
 
 <template:addResources type="javascript" resources="jquery.min.js,jquery-ui.min.js" />
+<template:addResources type="javascript" resources="jquery.tabSlideOut.v1.3.js" />
 <template:addResources type="javascript" resources="angular.min.js" />
 <template:addResources type="javascript" resources="app/portalWidgetsZap.js" />
+
+<script>
+    $(function(){
+        $('#portalWidgetsZap').tabSlideOut({
+            pathToTabImage: '/modules/bootstrap-components/images/user.png',
+            tabHandle: '.handle',                              //class of the element that will be your tab
+            imageHeight: '32px',                               //height of tab image
+            imageWidth: '32px',                               //width of tab image
+            tabLocation: 'left',                               //side of screen where tab lives, top, right, bottom, or left
+            speed: 300,                                        //speed of animation
+            action: 'click',                                   //options: 'click' or 'hover', action to trigger animation
+            topPos: '100px',                                   //position from the top
+            fixedPosition: true                               //options: true makes it stick(fixed position) on scroll
+        });
+    });
+</script>
+
+<style>
+    #portalWidgetsZap {
+        padding: 20px;
+        width: 250px;
+        background: #ccc;
+        border: 1px solid #29216d;
+    }
+</style>
+
 <c:choose>
     <c:when test="${renderContext.mode == 'studiovisual'}">
         <div id="portalWidgetsZap">
-            <button type="button">Add widget</button>
-            <div>
+            <a class="handle" href="http://link-for-non-js-users.html">Content</a>
                 <input class="span5 right" type="text" placeholder="Search...">
 
                 <ul>
@@ -42,7 +68,6 @@
                         <span>Widget 3</span>
                     </li>
                 </ul>
-            </div>
         </div>
     </c:when>
     <c:otherwise>
@@ -52,8 +77,7 @@
         <c:set var="portalIsEditable" value="${jcr:hasPermission(renderContext.mainResource.node, 'jcr:write_live')}"/>
 
         <div id="portalWidgetsZap" ng-controller="widgetsCtrl" ng-init="init()">
-            <button type="button" ng-init="showList = false" ng-click="showList = !showList">Add widget</button>
-            <div ng-show="showList">
+            <a class="handle" href="http://link-for-non-js-users.html">Content</a>
                 <input class="span5 right" ng-model="query" type="text" placeholder="Search...">
 
                 <ul>
@@ -61,7 +85,6 @@
                         <span>{{widget.displayableName}}</span>
                     </li>
                 </ul>
-            </div>
         </div>
 
         <script type="text/javascript">

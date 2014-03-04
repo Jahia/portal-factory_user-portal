@@ -2,6 +2,13 @@
 .portal_area{
     min-height: 40px;
 }
+.ui-sortable-placeholder {
+    border: 1px dotted black;
+    visibility: visible !important;
+    height: 50px !important;
+}
+
+/* end */
 
 .portal_toolbar .right{
     float: right;

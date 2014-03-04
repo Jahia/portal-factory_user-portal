@@ -1,3 +1,8 @@
+/* hook for being able to drag widget in empty areas */
+.portal_area{
+    min-height: 40px;
+}
+
 .portal_toolbar .right{
     float: right;
 }

@@ -15,7 +15,7 @@
 <%--@elvariable id="renderContext" type="org.jahia.services.render.RenderContext"--%>
 <%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
-<template:addResources type="css" resources="portal/portal-demo.css"/>
+<template:addResources type="css" resources="user-portals.css"/>
 
 <jcr:node path="${renderContext.user.localPath}" var="user" />
 <template:addCacheDependency path="${user.path}/portals/${renderContext.site.siteKey}"/>

@@ -20,29 +20,53 @@
 <%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
 <%--@elvariable id="nodetype" type="org.jahia.services.content.nodetypes.ExtendedNodeType"--%>
-<c:set var="portalMixin" value="<%= PortalConstants.JMIX_PORTAL %>"/>
-<c:set var="portalModelNT" value="<%= PortalConstants.JNT_PORTAL_MODEL %>"/>
-<c:set var="portalNode" value="${jcr:getParentOfType(renderContext.mainResource.node, portalMixin)}" />
-<c:set var="portalIsEditable" value="${jcr:hasPermission(renderContext.mainResource.node, 'jcr:write_live')}"/>
 
 <template:addResources type="javascript" resources="jquery.min.js,jquery-ui.min.js" />
 <template:addResources type="javascript" resources="angular.min.js" />
 <template:addResources type="javascript" resources="app/portalWidgetsZap.js" />
+<c:choose>
+    <c:when test="${renderContext.mode == 'studiovisual'}">
+        <div id="portalWidgetsZap">
+            <button type="button">Add widget</button>
+            <div>
+                <input class="span5 right" type="text" placeholder="Search...">
 
-<div id="portalWidgetsZap" ng-controller="widgetsCtrl" ng-init="init()">
-    <button type="button" ng-init="showList = false" ng-click="showList = !showList">Add widget</button>
-    <div ng-show="showList">
-        <input class="span5 right" ng-model="query" type="text" placeholder="Search...">
+                <ul>
+                    <li>
+                        <span>Widget 1</span>
+                    </li>
+                    <li>
+                        <span>Widget 2</span>
+                    </li>
+                    <li>
+                        <span>Widget 3</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </c:when>
+    <c:otherwise>
+        <c:set var="portalMixin" value="<%= PortalConstants.JMIX_PORTAL %>"/>
+        <c:set var="portalModelNT" value="<%= PortalConstants.JNT_PORTAL_MODEL %>"/>
+        <c:set var="portalNode" value="${jcr:getParentOfType(renderContext.mainResource.node, portalMixin)}" />
+        <c:set var="portalIsEditable" value="${jcr:hasPermission(renderContext.mainResource.node, 'jcr:write_live')}"/>
 
-        <ul>
-            <li ng-repeat="widget in widgets | filter: search" portal-widget>
-                <span>{{widget.displayableName}}</span>
-            </li>
-        </ul>
-    </div>
-</div>
+        <div id="portalWidgetsZap" ng-controller="widgetsCtrl" ng-init="init()">
+            <button type="button" ng-init="showList = false" ng-click="showList = !showList">Add widget</button>
+            <div ng-show="showList">
+                <input class="span5 right" ng-model="query" type="text" placeholder="Search...">
 
-<script type="text/javascript">
-    // Boostrap app
-    angular.bootstrap(document.getElementById("portalWidgetsZap"),['portalWidgetsZapApp']);
-</script>
+                <ul>
+                    <li ng-repeat="widget in widgets | filter: search" portal-widget>
+                        <span>{{widget.displayableName}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            // Boostrap app
+            angular.bootstrap(document.getElementById("portalWidgetsZap"),['portalWidgetsZapApp']);
+        </script>
+    </c:otherwise>
+</c:choose>

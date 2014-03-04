@@ -78,16 +78,16 @@
 
     <c:if test="${portalIsEditable && !portalIsLocked}">
         <script type="text/ng-template" id="tabFormTemplate">
-            <form>
-                <div class="row-fluid">
-                    <fmt:message key="jnt_portalToolbar.tabForm.name"/>: <input type="text" ng-model="form.name" required>
+            <form class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label"><fmt:message key="jnt_portalToolbar.tabForm.name"/>:&nbsp;</label><input type="text" ng-model="form.name" required>
                 </div>
-                <div class="row-fluid">
-                    <fmt:message key="jnt_portalToolbar.tabForm.template"/>:
+                <div class="control-group">
+                    <label class="control-label"><fmt:message key="jnt_portalToolbar.tabForm.template"/>:&nbsp;</label>
                     <select ng-model='form.template.key' required ng-options='option.key as option.name for option in form.allowedTemplates'></select>
                 </div>
-                <div class="row-fluid">
-                    <fmt:message key="jnt_portalToolbar.tabForm.widgetsSkin"/>:
+                <div class="control-group">
+                    <label class="control-label"><fmt:message key="jnt_portalToolbar.tabForm.widgetsSkin"/>:&nbsp;</label>
                     <select ng-model='form.widgetSkin.key' required ng-options='option.key as option.name for option in form.allowedWidgetsSkins'></select>
                 </div>
             </form>

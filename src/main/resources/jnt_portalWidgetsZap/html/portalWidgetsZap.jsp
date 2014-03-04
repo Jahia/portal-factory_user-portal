@@ -45,7 +45,7 @@
 
 <c:choose>
     <c:when test="${renderContext.mode == 'studiovisual'}">
-        <div id="portalWidgetsZap visible-desktop">
+        <div id="portalWidgetsZap">
             <a class="handle" href="http://link-for-non-js-users.html">Content</a>
                 <input class="span5 right" type="text" placeholder="Search...">
 
@@ -68,7 +68,7 @@
         <c:set var="portalNode" value="${jcr:getParentOfType(renderContext.mainResource.node, portalMixin)}" />
         <c:set var="portalIsEditable" value="${jcr:hasPermission(renderContext.mainResource.node, 'jcr:write_live')}"/>
 
-        <div id="portalWidgetsZap" ng-controller="widgetsCtrl" ng-init="init()">
+        <div id="portalWidgetsZap" class="visible-desktop" ng-controller="widgetsCtrl" ng-init="init()">
             <a class="handle" href="http://link-for-non-js-users.html">Content</a>
             <div class="row-fluid">
                 <input class="span12" ng-model="query" type="text" placeholder="Search...">

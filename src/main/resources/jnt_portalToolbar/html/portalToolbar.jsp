@@ -60,7 +60,7 @@
                 <li class="right"><a href="#editTabModal" data-toggle="modal"
                                      class="toolbar-tooltip" data-placement="bottom" title="<fmt:message key="jnt_portalToolbar.editTab.tooltip"/>"><i class="icon-wrench"></i></a>
                 </li>
-                <li class="right"><a href="#widgetsModal" data-toggle="modal"
+                <li class="right visible-phone visible-tablet"><a href="#widgetsModal" data-toggle="modal"
                                      class="toolbar-tooltip" data-placement="bottom" title="<fmt:message key="jnt_portalToolbar.addWidget.tooltip"/>"><i class="icon-plus"></i></a>
                 </li>
             </c:if>

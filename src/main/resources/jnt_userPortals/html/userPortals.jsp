@@ -26,7 +26,7 @@
     <ul class="nav nav-list userPortals">
         <c:forEach items="${portal:userPortalsBySite(renderContext.site.siteKey)}" var="portalNode">
             <li>
-                <a href="<c:url value="${url.base}${portalNode.path}"/>">${portalNode.displayableName}</a>
+                <a href="<c:url value="${url.baseLive}${portalNode.path}"/>">${portalNode.displayableName}</a>
             </li>
         </c:forEach>
     </ul>

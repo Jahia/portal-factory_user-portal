@@ -46,8 +46,9 @@
     #portalWidgetsZap {
         padding: 20px;
         width: 250px;
-        background: #ccc;
-        border: 1px solid #29216d;
+        background: #eaeaea;
+        border: 1px solid #ccc;
+        height: auto;
     }
 </style>
 

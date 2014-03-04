@@ -3,7 +3,7 @@
     min-height: 50px;
 }
 .ui-sortable-placeholder {
-    border: 1px dotted black;
+    border: 2px solid black;
     visibility: visible !important;
     height: 50px !important;
     margin-bottom: 20px;

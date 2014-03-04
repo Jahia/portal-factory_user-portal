@@ -25,11 +25,12 @@
 <template:addResources type="javascript" resources="jquery.tabSlideOut.v1.3.js" />
 <template:addResources type="javascript" resources="angular.min.js" />
 <template:addResources type="javascript" resources="app/portalWidgetsZap.js" />
+<template:addResources type="css" resources="portal-zap.css"/>
 
 <script>
     $(function(){
         $('#portalWidgetsZap').tabSlideOut({
-            pathToTabImage: '/modules/bootstrap-components/images/user.png',
+            pathToTabImage: '<c:url value="${url.currentModule}/img/open.png"/>',
             tabHandle: '.handle',                              //class of the element that will be your tab
             imageHeight: '32px',                               //height of tab image
             imageWidth: '32px',                               //width of tab image
@@ -41,16 +42,6 @@
         });
     });
 </script>
-
-<style>
-    #portalWidgetsZap {
-        padding: 20px;
-        width: 250px;
-        background: #eaeaea;
-        border: 1px solid #ccc;
-        height: auto;
-    }
-</style>
 
 <c:choose>
     <c:when test="${renderContext.mode == 'studiovisual'}">
@@ -79,13 +70,14 @@
 
         <div id="portalWidgetsZap" ng-controller="widgetsCtrl" ng-init="init()">
             <a class="handle" href="http://link-for-non-js-users.html">Content</a>
-                <input class="span5 right" ng-model="query" type="text" placeholder="Search...">
-
-                <ul>
+            <div class="row-fluid">
+                <input class="span12" ng-model="query" type="text" placeholder="Search...">
+                <ul class="zap-menu">
                     <li ng-repeat="widget in widgets | filter: search" portal-widget>
-                        <span>{{widget.displayableName}}</span>
+                        <span><i class="fa fa-share color-blue"></i> {{widget.displayableName}}</span>
                     </li>
                 </ul>
+            </div>
         </div>
 
         <script type="text/javascript">

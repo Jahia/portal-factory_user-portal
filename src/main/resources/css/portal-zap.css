@@ -1,0 +1,59 @@
+#portalWidgetsZap {
+    padding: 20px;
+    width: 250px;
+    background: #eaeaea;
+    border: 1px solid #ccc;
+    height: auto !important;
+}
+
+.zap-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.zap-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.zap-menu li {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+.zap-menu > li:first-child {
+    border-top: medium none;
+}
+.zap-menu > li:last-child {
+    border-bottom: medium none;
+}
+.zap-menu li span {
+    color: #F2F2F2;
+    display: inline-block;
+    padding: 1em;
+    width: 100%;
+}
+.zap-menu li span:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    text-decoration: none;
+}
+.zap-menu li span {
+    border-left: 3px solid rgba(0, 0, 0, 0);
+}
+.zap-menu li span:hover {
+    border-left: 3px solid #3399ff;
+}
+.zap-menu {
+    background-color: #222222;
+    color: #eaeaea;
+}
+.zap-menu span {
+    color: #3399ff;
+    text-decoration: none;
+}
+.zap-menu span:hover {
+    color: #3399ff;
+    text-decoration: underline;
+}

@@ -45,7 +45,7 @@
 
 <c:choose>
     <c:when test="${renderContext.mode == 'studiovisual'}">
-        <div id="portalWidgetsZap">
+        <div id="portalWidgetsZap visible-desktop">
             <a class="handle" href="http://link-for-non-js-users.html">Content</a>
                 <input class="span5 right" type="text" placeholder="Search...">
 

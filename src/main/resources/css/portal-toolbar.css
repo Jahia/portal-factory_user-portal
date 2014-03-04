@@ -1,11 +1,12 @@
 /* hook for being able to drag widget in empty areas */
 .portal_area{
-    min-height: 40px;
+    min-height: 50px;
 }
 .ui-sortable-placeholder {
     border: 1px dotted black;
     visibility: visible !important;
     height: 50px !important;
+    margin-bottom: 20px;
 }
 
 /* end */

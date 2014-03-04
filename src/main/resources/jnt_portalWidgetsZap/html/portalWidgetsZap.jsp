@@ -40,6 +40,14 @@
             topPos: '100px',                                   //position from the top
             fixedPosition: true                               //options: true makes it stick(fixed position) on scroll
         });
+
+        $('#portalWidgetsZap').click(function(){
+            if($(this).hasClass("open")){
+                $("#portalWidgetsZap a.handle").css("background-image", "url(<c:url value='${url.currentModule}/img/close.png'/>)");
+            }else {
+                $("#portalWidgetsZap a.handle").css("background-image", "url(<c:url value='${url.currentModule}/img/open.png'/>)");
+            }
+        });
     });
 </script>
 

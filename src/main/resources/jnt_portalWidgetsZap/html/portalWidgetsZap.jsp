@@ -82,7 +82,7 @@
                 <input class="span12" ng-model="query" type="text" placeholder="Search...">
                 <ul class="zap-menu">
                     <li ng-repeat="widget in widgets | filter: search" portal-widget>
-                        <span><i class="fa fa-share color-blue"></i> {{widget.displayableName}}</span>
+                        <span><i class="fa fa-chevron-right"></i>&nbsp;{{widget.displayableName}} <i class="pull-right fa fa-share color-blue"></i></span>
                     </li>
                 </ul>
             </div>

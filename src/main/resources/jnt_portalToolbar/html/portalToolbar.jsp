@@ -38,6 +38,19 @@
 
 <div id="portal_toolbar" class="portal_toolbar">
     <div ng-controller="navCtrl" ng-init="init()">
+        <c:if test="${jcr:isNodeType(portalNode, portalModelNT) && portalIsEditable}">
+            <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Warning!</strong> <fmt:message key="jnt_portalToolbar.model.editable"/>
+            </div>
+        </c:if>
+        <c:if test="${jcr:isNodeType(portalNode, portalModelNT) && !portalIsEditable}">
+            <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Warning!</strong> <fmt:message key="jnt_portalToolbar.model.notEditable"/>
+            </div>
+        </c:if>
+
         <ul class="nav nav-tabs">
             <li ng-class="isCurrentTab(tab) ? 'active' : ''" ng-repeat="tab in tabs">
                 <a href="{{tab.url}}">{{tab.name}}</a>

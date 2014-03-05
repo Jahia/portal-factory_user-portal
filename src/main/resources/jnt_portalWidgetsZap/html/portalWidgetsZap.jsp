@@ -75,22 +75,28 @@
         <c:set var="portalModelNT" value="<%= PortalConstants.JNT_PORTAL_MODEL %>"/>
         <c:set var="portalNode" value="${jcr:getParentOfType(renderContext.mainResource.node, portalMixin)}" />
         <c:set var="portalIsEditable" value="${jcr:hasPermission(renderContext.mainResource.node, 'jcr:write_live')}"/>
+        <c:set var="portalIsLocked" value="${not empty portalNode.properties['j:locked'] && portalNode.properties['j:locked'].boolean}"/>
 
-        <div id="portalWidgetsZap" class="visible-desktop" ng-controller="widgetsCtrl" ng-init="init()">
-            <a class="handle" href="http://link-for-non-js-users.html">Content</a>
-            <div class="row-fluid">
-                <input class="span12" ng-model="query" type="text" placeholder="Search...">
-                <ul class="zap-menu">
-                    <li ng-repeat="widget in widgets | filter: search" portal-widget>
-                        <span><i class="fa fa-share color-blue"></i> {{widget.displayableName}}</span>
-                    </li>
-                </ul>
+        <template:addCacheDependency node="${portalNode}"/>
+        <template:addCacheDependency node="${portalNode.properties['j:model'].node}"/>
+
+        <c:if test="${portalIsEditable && !portalIsLocked}">
+            <div id="portalWidgetsZap" class="visible-desktop" ng-controller="widgetsCtrl" ng-init="init()">
+                <a class="handle" href="http://link-for-non-js-users.html">Content</a>
+                <div class="row-fluid">
+                    <input class="span12" ng-model="query" type="text" placeholder="Search...">
+                    <ul class="zap-menu">
+                        <li ng-repeat="widget in widgets | filter: search" portal-widget>
+                            <span><i class="fa fa-share color-blue"></i> {{widget.displayableName}}</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-        <script type="text/javascript">
-            // Boostrap app
-            angular.bootstrap(document.getElementById("portalWidgetsZap"),['portalWidgetsZapApp']);
-        </script>
+            <script type="text/javascript">
+                // Boostrap app
+                angular.bootstrap(document.getElementById("portalWidgetsZap"),['portalWidgetsZapApp']);
+            </script>
+        </c:if>
     </c:otherwise>
 </c:choose>

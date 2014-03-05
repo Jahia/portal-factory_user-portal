@@ -81,17 +81,17 @@
         <template:addCacheDependency node="${portalNode.properties['j:model'].node}"/>
 
         <c:if test="${portalIsEditable && !portalIsLocked}">
-            <div id="portalWidgetsZap" class="visible-desktop" ng-controller="widgetsCtrl" ng-init="init()">
-                <a class="handle" href="http://link-for-non-js-users.html">Content</a>
-                <div class="row-fluid">
-                    <input class="span12" ng-model="query" type="text" placeholder="Search...">
-                    <ul class="zap-menu">
-                        <li ng-repeat="widget in widgets | filter: search" portal-widget>
-                            <span><i class="fa fa-share color-blue"></i> {{widget.displayableName}}</span>
-                        </li>
-                    </ul>
-                </div>
+        <div id="portalWidgetsZap" class="visible-desktop" ng-controller="widgetsCtrl" ng-init="init()">
+            <a class="handle" href="http://link-for-non-js-users.html">Content</a>
+            <div class="row-fluid">
+                <input class="span12" ng-model="query" type="text" placeholder="Search...">
+                <ul class="zap-menu">
+                    <li ng-repeat="widget in widgets | filter: search" portal-widget>
+                        <span><i class="fa fa-chevron-right"></i>&nbsp;{{widget.displayableName}} <i class="pull-right fa fa-share color-blue"></i></span>
+                    </li>
+                </ul>
             </div>
+        </div>
 
             <script type="text/javascript">
                 // Boostrap app

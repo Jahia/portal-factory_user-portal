@@ -8,8 +8,8 @@ portalWidgetsZap.directive('portalWidget', function($timeout) {
                 element.addClass(Jahia.Portal.constants.EXTERNAL_WIDGET_DROP_CLASS);
                 element.attr("data-" + Jahia.Portal.constants.EXTERNAL_WIDGET_DROP_NODEYPE, widget.name);
                 widget.views.forEach(function(view){
-                    if(view.key == "edit"){
-                        element.attr("data-" + Jahia.Portal.constants.EXTERNAL_WIDGET_DROP_VIEW, "edit");
+                    if(view.key == "portal.edit"){
+                        element.attr("data-" + Jahia.Portal.constants.EXTERNAL_WIDGET_DROP_VIEW, "portal.edit");
                     }
                 });
             }

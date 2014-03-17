@@ -16,7 +16,6 @@ portalToolbar.controller('widgetsCtrl', function ctrl($scope) {
                 });
             });
         });
-
     };
 
     $scope.selectWidget = function (nodetype) {

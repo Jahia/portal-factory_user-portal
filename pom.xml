@@ -8,11 +8,11 @@
     <version>7.0.0.0-SNAPSHOT</version>
   </parent>
   <groupId>org.jahia.modules</groupId>
-  <artifactId>portal-dashboard</artifactId>
+  <artifactId>portal-factory_user-portal</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
-  <name>portal dashboard</name>
-  <description>This is the custom module (portal dashboard) for running on a Jahia xCM server.</description>
+  <name>Portal factory - user portal</name>
+  <description>This is the custom module (portal factory - user portal) for running on a Jahia xCM server.</description>
   <scm>
     <connection>scm:dummy:uri</connection>
     <developerConnection>scm:dummy:uri</developerConnection>
@@ -26,7 +26,7 @@
       </dependency>
     <dependency>
       <groupId>org.jahia.modules</groupId>
-      <artifactId>portal-factory</artifactId>
+      <artifactId>portal-factory_core</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
@@ -75,7 +75,7 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Jahia-Depends>default,bootstrap,portal-factory</Jahia-Depends>
+            <Jahia-Depends>default,bootstrap,portal-factory_core</Jahia-Depends>
           </instructions>
         </configuration>
       </plugin>

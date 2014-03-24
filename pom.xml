@@ -84,10 +84,11 @@
   <packaging>bundle</packaging>
   <name>Portal factory - user portal</name>
   <description>This is the custom module (portal factory - user portal) for running on a Jahia xCM server.</description>
-  <scm>
-    <connection>scm:dummy:uri</connection>
-    <developerConnection>scm:dummy:uri</developerConnection>
-  </scm>
+    <scm>
+        <connection>scm:git:git@github.com:Jahia/portal-factory_user-portal.git</connection>
+        <developerConnection>scm:git:git@github.com:Jahia/portal-factory_user-portal.git</developerConnection>
+        <url>scm:git:git@github.com:Jahia/portal-factory_user-portal.git</url>
+    </scm>
   <distributionManagement>
     <repository>
       <id>jahia-enterprise-releases</id>

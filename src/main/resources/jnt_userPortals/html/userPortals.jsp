@@ -24,7 +24,7 @@
 <div>
     <h3><fmt:message key="userPortals.myPortals"/>:</h3>
     <ul class="nav nav-list userPortals">
-        <c:forEach items="${portal:userPortalsBySite(renderContext.site.siteKey)}" var="portalNode">
+        <c:forEach items="${portal:userPortalsBySite(renderContext.site.siteKey, renderContext.mainResourceLocale)}" var="portalNode">
             <li>
                 <a href="<c:url value="${url.baseLive}${portalNode.path}"/>">${portalNode.displayableName}</a>
             </li>

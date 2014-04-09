@@ -74,6 +74,16 @@ portalToolbar.controller('tabCtrl', function test($scope) {
     };
 });
 
+portalToolbar.directive('decodehtml', function($timeout) {
+    return {
+        link: function(scope, element, attrs) {
+            setTimeout(function(){
+                element.text($("<div></div>").html(element.text()).text());
+            }, 0)
+        }
+    };
+});
+
 portalToolbar.controller('navCtrl', function test($scope) {
     $scope.canBeDeleted = false;
     $scope.tabs = [];

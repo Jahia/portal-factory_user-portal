@@ -53,7 +53,7 @@
 
         <ul class="nav nav-tabs">
             <li ng-class="isCurrentTab(tab) ? 'active' : ''" ng-repeat="tab in tabs">
-                <a href="{{tab.url}}">{{tab.name}}</a>
+                <a href="{{tab.url}}" decodehtml>{{tab.name}}</a>
             </li>
 
             <c:if test="${jcr:isNodeType(portalNode, portalModelNT) and !portal:userPortalExist(portalNode) and portalNode.properties['j:enabled'].boolean}">

@@ -1,5 +1,15 @@
 var portalToolbar = angular.module('portalToolbar', []);
 
+portalToolbar.directive('decodehtml', function($timeout) {
+    return {
+        link: function(scope, element, attrs) {
+            setTimeout(function(){
+                element.text($("<div></div>").html(element.text()).text());
+            }, 0)
+        }
+    };
+});
+
 portalToolbar.controller('widgetsCtrl', function ctrl($scope) {
     $scope.modalId = "";
     $scope.widgets = [];
@@ -54,6 +64,8 @@ portalToolbar.controller('tabCtrl', function test($scope) {
                     $scope.form = form;
                     if(!$scope.edit){
                         form.name = "";
+                    }else {
+                        form.name = $("<div></div>").html(form.name).text();
                     }
                 });
             });
@@ -71,16 +83,6 @@ portalToolbar.controller('tabCtrl', function test($scope) {
                 $scope.form = [];
             });
         }, isNew);
-    };
-});
-
-portalToolbar.directive('decodehtml', function($timeout) {
-    return {
-        link: function(scope, element, attrs) {
-            setTimeout(function(){
-                element.text($("<div></div>").html(element.text()).text());
-            }, 0)
-        }
     };
 });
 

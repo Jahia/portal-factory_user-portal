@@ -24,7 +24,10 @@
 <c:set var="portalMixin" value="<%= PortalConstants.JMIX_PORTAL %>"/>
 <c:set var="portalModelNT" value="<%= PortalConstants.JNT_PORTAL_MODEL %>"/>
 <c:set var="portalNode" value="${jcr:getParentOfType(renderContext.mainResource.node, portalMixin)}" />
+<c:set var="portalIsModel" value="${jcr:isNodeType(portalNode, portalModelNT)}"/>
 <c:set var="portalIsEditable" value="${jcr:hasPermission(renderContext.mainResource.node, 'jcr:write_live')}"/>
+<c:set var="portalIsCustomizable" value="${portalIsModel and portalNode.properties['j:allowCustomization'].boolean}"/>
+<c:set var="portalIsEnabled" value="${portalIsModel and portalNode.properties['j:enabled'].boolean}"/>
 <c:set var="portalIsLocked" value="${not empty portalNode.properties['j:locked'] && portalNode.properties['j:locked'].boolean}"/>
 
 <template:addCacheDependency node="${portalNode}"/>
@@ -38,13 +41,13 @@
 
 <div id="portal_toolbar" class="portal_toolbar">
     <div ng-controller="navCtrl" ng-init="init()">
-        <c:if test="${jcr:isNodeType(portalNode, portalModelNT) && portalIsEditable}">
+        <c:if test="${portalIsModel && portalIsEditable}">
             <div class="alert alert-info">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>Warning!</strong> <fmt:message key="jnt_portalToolbar.model.editable"/>
             </div>
         </c:if>
-        <c:if test="${jcr:isNodeType(portalNode, portalModelNT) && !portalIsEditable}">
+        <c:if test="${portalIsModel && !portalIsEditable && portalIsCustomizable}">
             <div class="alert alert-info">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>Warning!</strong> <fmt:message key="jnt_portalToolbar.model.notEditable"/>
@@ -56,7 +59,7 @@
                 <a href="{{tab.url}}" decodehtml>{{tab.name}}</a>
             </li>
 
-            <c:if test="${jcr:isNodeType(portalNode, portalModelNT) and !portal:userPortalExist(portalNode) and portalNode.properties['j:enabled'].boolean}">
+            <c:if test="${portalIsModel and !portal:userPortalExist(portalNode) and portalIsEnabled and portalIsCustomizable}">
                 <li class="right">
                     <button type="button" class="customize-btn btn btn-inverse toolbar-tooltip" ng-click="copyModel()" data-placement="bottom"
                             title="<fmt:message key="jnt_portalToolbar.customize.tooltip"/>"><fmt:message key="jnt_portalToolbar.customize"/></button>

@@ -64,7 +64,7 @@
             </c:if>
             <c:if test="${portalIsEditable && !portalIsLocked}">
                 <li><a href="#newTabModal" data-toggle="modal"  class="toolbar-tooltip" data-placement="bottom" title="<fmt:message key="jnt_portalToolbar.addTab.tooltip"/>">
-                    <i class="icon-folder-open"></i></a>
+                    <i class="icon-plus"></i></a>
                 </li>
                 <li class="right" ng-show="canBeDeleted"><a href="#" ng-click="deleteTab()"
                                                             class="toolbar-tooltip" data-placement="bottom" title="<fmt:message key="jnt_portalToolbar.deleteTab.tooltip"/>">

@@ -24,16 +24,12 @@ portalWidgetsZap.directive('portalWidget', function($timeout) {
 });
 
 portalWidgetsZap.controller('widgetsCtrl', function ctrl($scope) {
-    $scope.widgets = [];
+    $scope.widgets = portal.portalWidgetTypes;
     $scope.desiredWidget = "";
     $scope.query = "";
 
     $scope.init = function () {
-        portal.getWidgetTypes(function (widgets) {
-            $scope.$apply(function () {
-                $scope.widgets = widgets;
-            });
-        });
+        //TODO delete this
     };
 
     $scope.search = function (widget) {

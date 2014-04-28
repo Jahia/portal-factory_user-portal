@@ -12,20 +12,13 @@ portalToolbar.directive('decodehtml', function($timeout) {
 
 portalToolbar.controller('widgetsCtrl', function ctrl($scope) {
     $scope.modalId = "";
-    $scope.widgets = [];
+    $scope.widgets = portal.portalWidgetTypes;
     $scope.desiredName = "";
     $scope.desiredWidget = "";
     $scope.query = "";
 
     $scope.init = function (modalId) {
         $scope.modalId = modalId;
-        $('#' + modalId).on('show', function () {
-            portal.getWidgetTypes(function (widgets) {
-                $scope.$apply(function () {
-                    $scope.widgets = widgets;
-                });
-            });
-        });
     };
 
     $scope.selectWidget = function (nodetype) {
@@ -59,15 +52,14 @@ portalToolbar.controller('tabCtrl', function test($scope) {
         $scope.modalId = modalId;
         $scope.edit = (type && type == "edit");
         $('#' + modalId).on('show', function () {
-            portal.getTabFormInfo(function (form) {
-                $scope.$apply(function () {
-                    $scope.form = form;
-                    if(!$scope.edit){
-                        form.name = "";
-                    }else {
-                        form.name = $("<div></div>").html(form.name).text();
-                    }
-                });
+            $scope.$apply(function(){
+                $scope.form = {
+                    name: $scope.edit ? $("<div></div>").html(portal.portalCurrentTab.displayableName).text() : '',
+                    template: portal.portalCurrentTab.templateKey,
+                    widgetSkin: portal.portalCurrentTab.skinKey,
+                    allowedTemplates: portal.portalTabTemplates,
+                    allowedWidgetsSkins: portal.portalTabSkins
+                }
             });
         });
     };
@@ -78,32 +70,36 @@ portalToolbar.controller('tabCtrl', function test($scope) {
     };
 
     $scope.submit = function (isNew) {
-        portal.saveTabForm($scope.form, function () {
+        portal.saveTabForm($scope.transformForm(), function () {
             $scope.$apply(function () {
                 $scope.form = [];
             });
         }, isNew);
     };
+
+    $scope.transformForm = function () {
+        return [
+            {"name":"jcr:title", "value":$scope.form.name},
+            {"name":"j:templateName", "value":$scope.form.template},
+            {"name":"j:widgetSkin", "value":$scope.form.widgetSkin}
+        ];
+    }
 });
 
 portalToolbar.controller('navCtrl', function test($scope) {
     $scope.canBeDeleted = false;
-    $scope.tabs = [];
+    $scope.tabs = portal.portalTabs;
 
     $scope.init = function () {
-        portal.getTabs(function (data) {
-            $scope.$apply(function () {
-                $scope.tabs = data;
-                if($scope.tabs.length > 1){
-                    $scope.canBeDeleted = true;
-                }
-            });
-        });
         $(".toolbar-tooltip").tooltip();
     };
 
     $scope.isCurrentTab = function (tab) {
         return tab.path == portal.portalTabPath;
+    };
+
+    $scope.getTabHref = function (tab) {
+        return portal.baseURL + tab.path + ".html";
     };
 
     $scope.deleteTab = function(){

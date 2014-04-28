@@ -10,7 +10,6 @@
 <%@ taglib prefix="ui" uri="http://www.jahia.org/tags/uiComponentsLib" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="uiComponents" uri="http://www.jahia.org/tags/uiComponentsLib" %>
-<%@ taglib prefix="portal" uri="http://www.jahia.org/tags/portalLib" %>
 <%--@elvariable id="currentNode" type="org.jahia.services.content.JCRNodeWrapper"--%>
 <%--@elvariable id="out" type="java.io.PrintWriter"--%>
 <%--@elvariable id="script" type="org.jahia.services.render.scripting.Script"--%>
@@ -20,17 +19,15 @@
 <%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
 <%--@elvariable id="nodetype" type="org.jahia.services.content.nodetypes.ExtendedNodeType"--%>
-<%--@elvariable id="portalNode" type="org.jahia.services.content.JCRNodeWrapper"--%>
-<c:set var="portalMixin" value="<%= PortalConstants.JMIX_PORTAL %>"/>
-<c:set var="portalModelNT" value="<%= PortalConstants.JNT_PORTAL_MODEL %>"/>
-<c:set var="portalNode" value="${jcr:getParentOfType(renderContext.mainResource.node, portalMixin)}" />
-<c:set var="portalIsModel" value="${jcr:isNodeType(portalNode, portalModelNT)}"/>
-<c:set var="portalIsEditable" value="${jcr:hasPermission(renderContext.mainResource.node, 'jcr:write_live')}"/>
-<c:set var="portalIsCustomizable" value="${portalIsModel and portalNode.properties['j:allowCustomization'].boolean}"/>
-<c:set var="portalIsEnabled" value="${portalIsModel and portalNode.properties['j:enabled'].boolean}"/>
-<c:set var="portalIsLocked" value="${not empty portalNode.properties['j:locked'] && portalNode.properties['j:locked'].boolean}"/>
+<%--@elvariable id="portalContext" type="org.jahia.modules.portal.service.bean.PortalContext"--%>
 
-<template:addCacheDependency node="${portalNode}"/>
+<c:set var="portalIsModel" value="${portalContext.model}"/>
+<c:set var="portalIsEditable" value="${portalContext.editable}"/>
+<c:set var="portalIsCustomizable" value="${portalContext.customizable}"/>
+<c:set var="portalIsEnabled" value="${portalContext.enabled}"/>
+<c:set var="portalIsLocked" value="${portalContext.lock}"/>
+
+<template:addCacheDependency path="${portalContext.path}"/>
 <template:addResources type="javascript" resources="jquery.min.js,jquery-ui.min.js" />
 <template:addResources type="javascript" resources="angular.min.js" />
 <bootstrap:addThemeJS/>
@@ -56,10 +53,10 @@
 
         <ul class="nav nav-tabs">
             <li ng-class="isCurrentTab(tab) ? 'active' : ''" ng-repeat="tab in tabs">
-                <a href="{{tab.url}}" decodehtml>{{tab.name}}</a>
+                <a ng-href="{{tab.url}}" decodehtml>{{tab.displayableName}}</a>
             </li>
 
-            <c:if test="${portalIsModel and !portal:userPortalExist(portalNode) and portalIsEnabled and portalIsCustomizable}">
+            <c:if test="${portalIsModel and portalIsEnabled and portalIsCustomizable}">
                 <li class="right">
                     <button type="button" class="customize-btn btn btn-inverse toolbar-tooltip" ng-click="copyModel()" data-placement="bottom"
                             title="<fmt:message key="jnt_portalToolbar.customize.tooltip"/>"><fmt:message key="jnt_portalToolbar.customize"/></button>
@@ -100,11 +97,11 @@
                 </div>
                 <div class="control-group">
                     <label class="control-label"><fmt:message key="jnt_portalToolbar.tabForm.template"/>:&nbsp; </label>
-                    <select ng-model='form.template.key' required ng-options='option.key as option.name for option in form.allowedTemplates'></select>
+                    <select ng-model='form.template' required ng-options='option.key as option.name for option in form.allowedTemplates'></select>
                 </div>
                 <div class="control-group">
                     <label class="control-label"><fmt:message key="jnt_portalToolbar.tabForm.widgetsSkin"/>:&nbsp; </label>
-                    <select ng-model='form.widgetSkin.key' required ng-options='option.key as option.name for option in form.allowedWidgetsSkins'></select>
+                    <select ng-model='form.widgetSkin' required ng-options='option.key as option.name for option in form.allowedWidgetsSkins'></select>
                 </div>
             </form>
         </script>

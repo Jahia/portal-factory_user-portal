@@ -10,7 +10,6 @@
 <%@ taglib prefix="ui" uri="http://www.jahia.org/tags/uiComponentsLib" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="uiComponents" uri="http://www.jahia.org/tags/uiComponentsLib" %>
-<%@ taglib prefix="portal" uri="http://www.jahia.org/tags/portalLib" %>
 <%--@elvariable id="currentNode" type="org.jahia.services.content.JCRNodeWrapper"--%>
 <%--@elvariable id="out" type="java.io.PrintWriter"--%>
 <%--@elvariable id="script" type="org.jahia.services.render.scripting.Script"--%>
@@ -20,6 +19,7 @@
 <%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
 <%--@elvariable id="nodetype" type="org.jahia.services.content.nodetypes.ExtendedNodeType"--%>
+<%--@elvariable id="portalContext" type="org.jahia.modules.portal.service.bean.PortalContext"--%>
 
 <template:addResources type="javascript" resources="jquery.min.js,jquery-ui.min.js" />
 <template:addResources type="javascript" resources="jquery.tabSlideOut.v1.3.js" />
@@ -71,14 +71,14 @@
         </div>
     </c:when>
     <c:otherwise>
-        <c:set var="portalMixin" value="<%= PortalConstants.JMIX_PORTAL %>"/>
-        <c:set var="portalModelNT" value="<%= PortalConstants.JNT_PORTAL_MODEL %>"/>
-        <c:set var="portalNode" value="${jcr:getParentOfType(renderContext.mainResource.node, portalMixin)}" />
-        <c:set var="portalIsEditable" value="${jcr:hasPermission(renderContext.mainResource.node, 'jcr:write_live')}"/>
-        <c:set var="portalIsLocked" value="${not empty portalNode.properties['j:locked'] && portalNode.properties['j:locked'].boolean}"/>
+        <c:set var="portalIsEditable" value="${portalContext.editable}"/>
+        <c:set var="portalIsLocked" value="${portalContext.lock}"/>
 
-        <template:addCacheDependency node="${portalNode}"/>
-        <template:addCacheDependency node="${portalNode.properties['j:model'].node}"/>
+        <template:addCacheDependency path="${portalContext.path}"/>
+        <c:if test="${!portalContext.model}">
+            <template:addCacheDependency path="${portalContext.modelPath}"/>
+        </c:if>
+
 
         <c:if test="${portalIsEditable && !portalIsLocked}">
         <div id="portalWidgetsZap" class="visible-desktop" ng-controller="widgetsCtrl" ng-init="init()">

@@ -98,6 +98,7 @@ portalToolbar.controller('navCtrl', function test($scope) {
     $scope.tabs = portal.portalTabs;
 
     $scope.init = function () {
+        $scope.canBeDeleted = portal.portalTabs.length > 1;
         $(".toolbar-tooltip").tooltip();
     };
 

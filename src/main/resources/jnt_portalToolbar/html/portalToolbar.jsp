@@ -103,6 +103,16 @@
                     <label class="control-label"><fmt:message key="jnt_portalToolbar.tabForm.widgetsSkin"/>:&nbsp; </label>
                     <select ng-model='form.widgetSkin' required ng-options='option.key as option.name for option in form.allowedWidgetsSkins'></select>
                 </div>
+                <c:if test="${!portalIsModel}">
+                    <div class="control-group">
+                        <label class="control-label"><fmt:message key="jnt_portalToolbar.tabForm.accessibility"/>:&nbsp; </label>
+                        <select ng-model='form.accessibility'>
+                            <option value="me"><fmt:message key="jnt_portalToolbar.tabForm.accessibility.me"/></option>
+                            <option value="users"><fmt:message key="jnt_portalToolbar.tabForm.accessibility.users"/></option>
+                            <option value="all"><fmt:message key="jnt_portalToolbar.tabForm.accessibility.all"/></option>
+                        </select>
+                    </div>
+                </c:if>
             </form>
         </script>
 

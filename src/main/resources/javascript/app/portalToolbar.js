@@ -57,6 +57,7 @@ portalToolbar.controller('tabCtrl', function test($scope) {
                     name: $scope.edit ? $("<div></div>").html(portal.portalCurrentTab.displayableName).text() : '',
                     template: portal.portalCurrentTab.templateKey,
                     widgetSkin: portal.portalCurrentTab.skinKey,
+                    accessibility: portal.portalCurrentTab.accessibility,
                     allowedTemplates: portal.portalTabTemplates,
                     allowedWidgetsSkins: portal.portalTabSkins
                 }
@@ -70,19 +71,25 @@ portalToolbar.controller('tabCtrl', function test($scope) {
     };
 
     $scope.submit = function (isNew) {
-        portal.saveTabForm($scope.transformForm(), function () {
+        portal.saveTabForm($scope.transformForm(isNew), function () {
             $scope.$apply(function () {
                 $scope.form = [];
             });
         }, isNew);
     };
 
-    $scope.transformForm = function () {
-        return [
+    $scope.transformForm = function (isNew) {
+        var result = [
             {"name":"jcr:title", "value":$scope.form.name},
             {"name":"j:templateName", "value":$scope.form.template},
             {"name":"j:widgetSkin", "value":$scope.form.widgetSkin}
         ];
+
+        if(!portal.isModel && (isNew || $scope.form.accessibility != portal.portalCurrentTab.accessibility)){
+            result.push({"name":"j:accessibility", "value":$scope.form.accessibility});
+        }
+
+        return result;
     }
 });
 

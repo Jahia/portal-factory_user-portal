@@ -93,6 +93,38 @@ portalToolbar.controller('tabCtrl', function test($scope) {
     }
 });
 
+portalToolbar.controller('newWidgetsCtrl', function test($scope) {
+    $scope.modalId = "";
+    $scope.newWidgetTypes = [];
+
+    $scope.init = function (modalId) {
+        $scope.modalId = modalId;
+        $(document).ready(function(){
+            $scope.$apply(function(){
+                for(var i = 0; i < portal.portalWidgetTypes.length; i++){
+                    if(portal.portalWidgetTypes[i].new){
+                        $scope.newWidgetTypes.push(portal.portalWidgetTypes[i]);
+                        $("#" + modalId).modal();
+                    }
+                }
+            });
+        })
+    };
+
+    $scope.ok = function(){
+        // AJAX update portal widget type list
+        var url = JCRRestUtils.buildURL("","","",portal.portalIdentifier);
+        var data = [];
+        for(var i = 0; i < portal.portalWidgetTypes.length; i++){
+            if(portal.portalWidgetTypes[i]){
+                data.push({name:"j:allowedWidgetTypes",value:portal.portalWidgetTypes[i].name})
+            }
+        }
+        JCRRestUtils.standardCall(url, "PUT",
+            JSON.stringify({properties: JCRRestUtils.arrayToDataProperties(data, true)}));
+    }
+});
+
 portalToolbar.controller('navCtrl', function test($scope) {
     $scope.canBeDeleted = false;
     $scope.tabs = portal.portalTabs;

@@ -193,6 +193,24 @@
                 <button class="btn btn-primary" ng-click="submit(true)"><fmt:message key="add"/></button>
             </div>
         </div>
+
+        <div id="newWidgets" class="modal hide fade" tabindex="-1" role="dialog"
+             aria-labelledby="newWidgetsModalLabel" ng-controller="newWidgetsCtrl" ng-init="init('newWidgets')">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" ng-click="ok()">×</button>
+                <h3 id="newWidgetsModalLabel"><fmt:message key="jnt_portalToolbar.portalNotification"/></h3>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <p>
+                        <fmt:message key="jnt_portalToolbar.newWidgetsAvailable"/>
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" ng-click="ok()">Ok</button>
+            </div>
+        </div>
     </c:if>
 </div>
 

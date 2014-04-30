@@ -15,13 +15,19 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
+    max-height: 300px;
+    overflow: hidden;
+    overflow-y: auto;
+    direction: rtl;
 }
 .zap-menu li {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin: 0;
     padding: 0;
+    text-align: left;
     width: 100%;
+    direction: ltr;
 }
 .zap-menu > li:first-child {
     border-top: medium none;
@@ -33,7 +39,7 @@
     color: #F2F2F2;
     display: inline-block;
     padding: 14px;
-    width: 222px;
+    width: 204px;
 }
 .zap-menu li span:hover {
     background-color: rgba(255, 255, 255, 0.05);

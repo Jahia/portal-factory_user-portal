@@ -39,7 +39,7 @@
 <template:addResources type="javascript" resources="bootstrap-collapse.js" />
 <template:addResources type="javascript" resources="app/portalToolbar.js" />
 <template:addResources type="css" resources="portal-toolbar.css"/>
-<c:set var="siteNode" value="${currentNode.resolveSite}"/>
+<c:set var="siteNode" value="${renderContext.mainResource.node.resolveSite}"/>
 
 <div id="portal_toolbar" class="portal_toolbar">
     <div ng-controller="navCtrl" ng-init="init()">
@@ -169,7 +169,7 @@
 
                                     <li ng-show="canBeDeleted">
                                         <a href="#" ng-click="deleteTab()">
-                                            <i class="icon-remove"></i>
+                                            <i class="icon-trash"></i>
                                             <fmt:message key="jnt_portalToolbar.deleteTab.menu"/>
                                         </a>
                                     </li>
@@ -205,6 +205,14 @@
                                     <fmt:message key="jnt_portalToolbar.login.profile"/>
                                 </a>
                             </li>
+                            <c:if test="${portalIsModel && jcr:hasPermission(siteNode, 'siteAdminPortalFactory')}">
+                                <li>
+                                    <a href="<c:url value='${url.baseEdit}${siteNode.path}.portal-factory.html'/>">
+                                        <i class="icon-th-list"></i>
+                                        <fmt:message key="jnt_portalToolbar.login.portalFactory"/>
+                                    </a>
+                                </li>
+                            </c:if>
 
                             <li class="divider"></li>
 

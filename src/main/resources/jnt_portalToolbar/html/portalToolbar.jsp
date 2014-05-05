@@ -20,6 +20,32 @@
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
 <%--@elvariable id="nodetype" type="org.jahia.services.content.nodetypes.ExtendedNodeType"--%>
 <%--@elvariable id="portalContext" type="org.jahia.modules.portal.service.bean.PortalContext"--%>
+<%--@elvariable id="portalTab" type="org.jahia.services.content.JCRNodeWrapper"--%>
+
+<c:set var="portalNode" value="${renderContext.mainResource.node.parent}"/>
+<script type="text/javascript">
+    portal.portalTabs = [];
+    var portalTab = {};
+    <c:forEach items="${portalNode.nodes}" var="portalTab">
+        <c:if test="${jcr:isNodeType(portalTab, 'jnt:portalTab')}">
+            <template:addCacheDependency path="${portalTab.path}"/>
+            <c:set var="isCurrent" value="${portalTab.identifier eq renderContext.mainResource.node.identifier}"/>
+                portalTab = {
+                    path:"${portalTab.path}",
+                    displayableName: "${portalTab.displayableName}",
+                    accessibility: "${not empty portalTab.properties['j:accessibility'] ? portalTab.properties['j:accessibility'].string : 'me'}",
+                    skinKey: "${portalTab.properties['j:widgetSkin'].string}",
+                    templateKey: "${portalTab.properties['j:templateName'].string}",
+                    current: ${isCurrent},
+                    url: "<c:url value="${url.baseLive}${portalTab.path}.html"/>"
+                }
+                portal.portalTabs.push(portalTab);
+            <c:if test="${isCurrent}">
+                portal.portalCurrentTab = portalTab;
+            </c:if>
+        </c:if>
+    </c:forEach>
+</script>
 
 <c:set var="portalIsModel" value="${portalContext.model}"/>
 <c:set var="portalIsEditable" value="${portalContext.editable}"/>
@@ -357,7 +383,3 @@
 <script type="text/javascript">
     angular.bootstrap(document.getElementById("portal_toolbar"),['portalToolbar']);
 </script>
-
-<c:if test="${renderContext.editMode}">
-    <template:module path="*"/>
-</c:if>

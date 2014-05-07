@@ -88,9 +88,94 @@
             </li>
 
             <li class="right">
+                <c:if test="${! renderContext.editMode}">
+                    <c:if test="${! renderContext.loggedIn}">
+                        <div class="login"><a class="btn btn-primary" href="#loginForm" role="button" data-toggle="modal"><i
+                                class="icon-user icon-white"></i>&nbsp;<fmt:message
+                                key="jnt_portalToolbar.login.title"/></a>
+                        </div>
+
+                        <div id="loginForm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                                <h3 id="myModalLabel"><fmt:message key="jnt_portalToolbar.login.title"/></h3>
+                            </div>
+                            <div class="modal-body">
+                                <ui:loginArea>
+                                    <c:if test="${not empty param['loginError']}">
+                                        <div class="alert alert-error"><fmt:message
+                                                key="${param['loginError'] == 'account_locked' ? 'message.accountLocked' : 'message.invalidUsernamePassword'}"/></div>
+                                    </c:if>
+
+                                    <p>
+                                        <label for="username" class="control-label"><fmt:message
+                                                key="jnt_portalToolbar.login.username"/></label>
+
+                                        <input type="text" value="" id="username" name="username"
+                                               class="input-icon input-icon-first-name"
+                                               placeholder="<fmt:message key="jnt_portalToolbar.login.username"/>">
+                                    </p>
+
+                                    <p>
+                                        <label for="password" class="control-label"><fmt:message
+                                                key="jnt_portalToolbar.login.password"/></label>
+                                        <input type="password" name="password" id="password"
+                                               class="input-icon input-icon-password"
+                                               placeholder="<fmt:message key="jnt_portalToolbar.login.password"/>">
+                                    </p>
+
+                                    <p>
+                                        <label for="useCookie" class="checkbox">
+                                            <input type="checkbox" id="useCookie" name="useCookie"/>
+                                            <fmt:message key="jnt_portalToolbar.login.rememberMe"/>
+                                        </label>
+                                    </p>
+
+                                    <p class="text-right">
+                                        <button class="btn btn-primary"><i class="icon-ok icon-white"></i> <fmt:message
+                                                key='jnt_portalToolbar.login.title'/>
+                                        </button>
+                                    </p>
+
+                                </ui:loginArea>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true"><i
+                                        class="icon-remove icon-white"></i> Close
+                                </button>
+                            </div>
+                        </div>
+
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                <c:set var="modalOption" value="${empty param['loginError'] ? 'hide' : 'show'}"/>
+                                $('#loginForm').modal('${modalOption}');
+                                $('#loginForm').appendTo("body");
+                            })
+                        </script>
+                    </c:if>
+                </c:if>
+                <c:if test="${renderContext.loggedIn}">
                     <div class="user-box dropdown">
-                        <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
-                            <fmt:message key="label.actions"/>&nbsp;
+
+                        <jcr:node var="userNode" path="${currentUser.localPath}"/>
+                        <jcr:nodeProperty var="picture" node="${userNode}" name="j:picture"/>
+                        <c:set var="firstname" value="${userNode.properties['j:firstName'].string}"/>
+                        <c:set var="lastname" value="${userNode.properties['j:lastName'].string}"/>
+
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <c:if test="${not empty picture}">
+                                <template:addCacheDependency flushOnPathMatchingRegexp="${userNode.path}/files/profile/.*"/>
+                                <img class='user-photo' src="${picture.node.thumbnailUrls['avatar_120']}"
+                                     alt="${fn:escapeXml(firstname)} ${fn:escapeXml(lastname)}" width="30" height="30"/>
+                            </c:if>
+                            <c:if test="${empty picture}">
+                                <img class='user-photo' src="<c:url value="${url.currentModule}/images/user.png"/>"
+                                     alt="${fn:escapeXml(firstname)} ${fn:escapeXml(lastname)}" width="30"
+                                     height="30"/>
+                            </c:if>
+                                ${fn:escapeXml(empty firstname and empty lastname ? userNode.name : firstname)}&nbsp;${fn:escapeXml(lastname)}
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -140,6 +225,12 @@
                                 </c:if>
 
                             <li class="divider"></li>
+                            <li>
+                                <a href="<c:url value='${url.myProfile}'/>">
+                                    <i class="icon-user"></i>
+                                    <fmt:message key="jnt_portalToolbar.login.profile"/>
+                                </a>
+                            </li>
                             <c:if test="${portalIsModel && jcr:hasPermission(siteNode, 'siteAdminPortalFactory')}">
                                 <li>
                                     <a href="<c:url value='${url.baseEdit}${siteNode.path}.portal-factory.html'/>">
@@ -148,8 +239,18 @@
                                     </a>
                                 </li>
                             </c:if>
+
+                            <li class="divider"></li>
+
+                            <li>
+                                <a href="<c:url value='${url.logout}'/>">
+                                    <i class="icon-off"></i>
+                                    <fmt:message key="jnt_portalToolbar.login.logout"/>
+                                </a>
+                            </li>
                         </ul>
                     </div>
+                </c:if>
             </li>
         </ul>
     </div>

@@ -48,6 +48,10 @@
                 $("#portalWidgetsZap a.handle").css("background-image", "url(<c:url value='${url.currentModule}/img/open.png'/>)");
             }
         });
+
+        $(document).click(function(){
+            $("#portalWidgetsZap a.handle").css("background-image", "url(<c:url value='${url.currentModule}/img/open.png'/>)");
+        });
     });
 </script>
 

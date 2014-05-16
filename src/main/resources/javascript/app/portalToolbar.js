@@ -14,20 +14,21 @@ portalToolbar.controller('widgetsCtrl', function ctrl($scope) {
     $scope.modalId = "";
     $scope.widgets = portal.portalWidgetTypes;
     $scope.desiredName = "";
-    $scope.desiredWidget = "";
+    $scope.desiredWidget = null;
     $scope.query = "";
 
     $scope.init = function (modalId) {
         $scope.modalId = modalId;
     };
 
-    $scope.selectWidget = function (nodetype) {
-        $scope.desiredWidget = nodetype;
+    $scope.selectWidget = function (widget) {
+        $scope.desiredWidget = widget;
     };
 
     $scope.addWidget = function () {
-        if ($scope.desiredName.length > 0 && $scope.desiredWidget.length > 0) {
-            portal.addNewWidget($scope.desiredWidget, $scope.desiredName);
+        if ($scope.desiredWidget != null) {
+            var desiredName = $scope.desiredName.length > 0 ? $scope.desiredName : $scope.desiredWidget.displayableName;
+            portal.addNewWidget($scope.desiredWidget.name, desiredName);
             $scope.cancel();
         }
     };
@@ -35,7 +36,7 @@ portalToolbar.controller('widgetsCtrl', function ctrl($scope) {
     $scope.cancel = function () {
         $('#' + $scope.modalId).modal('hide');
         $scope.desiredName = "";
-        $scope.desiredWidget = "";
+        $scope.desiredWidget = null;
     };
 
     $scope.search = function (widget) {

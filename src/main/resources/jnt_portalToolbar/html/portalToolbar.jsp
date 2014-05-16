@@ -194,7 +194,7 @@
                         <div class="span4">
                             <label for="widget_desiredName"><fmt:message key="jnt_portalToolbar.addWidgetForm.name"/>:</label>
                         </div>
-                        <input id="widget_desiredName" class="span8 right" ng-model="desiredName" type="text" required>
+                        <input id="widget_desiredName" class="span8 right" ng-model="desiredName" type="text">
                     </div>
 
                     <div class="form-group row-fluid">
@@ -208,8 +208,8 @@
 
                     <table class="table table-bordered widgets-table">
                         <tbody>
-                            <tr ng-repeat="widget in widgets | filter: search" ng-class="desiredWidget == widget.name ? 'active' : ''">
-                                <td colspan="2" ng-click="selectWidget(widget.name)">{{widget.displayableName}}</td>
+                            <tr ng-repeat="widget in widgets | filter: search" ng-class="desiredWidget.name == widget.name ? 'active' : ''">
+                                <td colspan="2" ng-click="selectWidget(widget)">{{widget.displayableName}}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -10,6 +10,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="uiComponents" uri="http://www.jahia.org/tags/uiComponentsLib" %>
 <%@ taglib prefix="bootstrap" uri="http://www.jahia.org/tags/bootstrapLib" %>
+<%@ taglib prefix="portal" uri="http://www.jahia.org/tags/portalLib" %>
 <%--@elvariable id="currentNode" type="org.jahia.services.content.JCRNodeWrapper"--%>
 <%--@elvariable id="out" type="java.io.PrintWriter"--%>
 <%--@elvariable id="script" type="org.jahia.services.render.scripting.Script"--%>
@@ -21,31 +22,6 @@
 <%--@elvariable id="nodetype" type="org.jahia.services.content.nodetypes.ExtendedNodeType"--%>
 <%--@elvariable id="portalContext" type="org.jahia.modules.portal.service.bean.PortalContext"--%>
 <%--@elvariable id="portalTab" type="org.jahia.services.content.JCRNodeWrapper"--%>
-
-<c:set var="portalNode" value="${renderContext.mainResource.node.parent}"/>
-<script type="text/javascript">
-    portal.portalTabs = [];
-    var portalTab = {};
-    <c:forEach items="${portalNode.nodes}" var="portalTab">
-        <c:if test="${jcr:isNodeType(portalTab, 'jnt:portalTab')}">
-            <template:addCacheDependency path="${portalTab.path}"/>
-            <c:set var="isCurrent" value="${portalTab.identifier eq renderContext.mainResource.node.identifier}"/>
-                portalTab = {
-                    path:"${portalTab.path}",
-                    displayableName: "${portalTab.displayableName}",
-                    accessibility: "${not empty portalTab.properties['j:accessibility'] ? portalTab.properties['j:accessibility'].string : 'me'}",
-                    skinKey: "${portalTab.properties['j:widgetSkin'].string}",
-                    templateKey: "${portalTab.properties['j:templateName'].string}",
-                    current: ${isCurrent},
-                    url: "<c:url value="${url.baseLive}${portalTab.path}.html"/>"
-                }
-                portal.portalTabs.push(portalTab);
-            <c:if test="${isCurrent}">
-                portal.portalCurrentTab = portalTab;
-            </c:if>
-        </c:if>
-    </c:forEach>
-</script>
 
 <c:set var="portalIsModel" value="${portalContext.model}"/>
 <c:set var="portalIsEditable" value="${portalContext.editable}"/>
@@ -215,14 +191,27 @@
                                         </a>
                                     </li>
                                 </c:if>
-                                <c:if test="${portalIsModel and portalIsEnabled and portalIsCustomizable}">
-                                    <li>
-                                        <a ng-click="copyModel()" class="toolbar-tooltip" href="#" title="<fmt:message key="jnt_portalToolbar.customize.tooltip"/>" data-placement="left">
-                                            <i class="icon-edit"></i>
-                                            <fmt:message key="jnt_portalToolbar.customize"/>
-                                        </a>
-                                    </li>
-                                </c:if>
+                            <c:if test="${portalIsModel and portalIsEnabled}">
+                                <c:set var="userPortal" value="${portal:userPortalByModel(portalContext.identifier, currentNode.session)}"/>
+                                <c:choose>
+                                    <c:when test="${portalIsCustomizable && userPortal == null}">
+                                        <li>
+                                            <a ng-click="copyModel()" class="toolbar-tooltip" href="#" title="<fmt:message key="jnt_portalToolbar.customize.tooltip"/>" data-placement="left">
+                                                <i class="icon-edit"></i>
+                                                <fmt:message key="jnt_portalToolbar.customize"/>
+                                            </a>
+                                        </li>
+                                    </c:when>
+                                    <c:when test="${portalIsCustomizable && userPortal != null}">
+                                        <li>
+                                            <a href="<c:url value="${url.baseLive}${userPortal.path}"/>">
+                                                <i class="icon-share-alt"></i>
+                                                <fmt:message key="jnt_portalToolbar.goToMyPortal"/>
+                                            </a>
+                                        </li>
+                                    </c:when>
+                                </c:choose>
+                            </c:if>
 
                             <li class="divider"></li>
                             <li>

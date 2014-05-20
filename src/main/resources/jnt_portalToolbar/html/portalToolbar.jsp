@@ -10,6 +10,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="uiComponents" uri="http://www.jahia.org/tags/uiComponentsLib" %>
 <%@ taglib prefix="bootstrap" uri="http://www.jahia.org/tags/bootstrapLib" %>
+<%@ taglib prefix="portal" uri="http://www.jahia.org/tags/portalLib" %>
 <%--@elvariable id="currentNode" type="org.jahia.services.content.JCRNodeWrapper"--%>
 <%--@elvariable id="out" type="java.io.PrintWriter"--%>
 <%--@elvariable id="script" type="org.jahia.services.render.scripting.Script"--%>
@@ -105,13 +106,26 @@
                                         </a>
                                     </li>
                                 </c:if>
-                                <c:if test="${portalIsModel and portalIsEnabled and portalIsCustomizable}">
-                                    <li>
-                                        <a ng-click="copyModel()" class="toolbar-tooltip" href="#" title="<fmt:message key="jnt_portalToolbar.customize.tooltip"/>" data-placement="left">
-                                            <i class="icon-edit"></i>
-                                            <fmt:message key="jnt_portalToolbar.customize"/>
-                                        </a>
-                                    </li>
+                                <c:if test="${portalIsModel and portalIsEnabled}">
+                                    <c:set var="userPortal" value="${portal:userPortalByModel(portalContext.identifier, currentNode.session)}"/>
+                                    <c:choose>
+                                        <c:when test="${portalIsCustomizable && userPortal == null}">
+                                            <li>
+                                                <a ng-click="copyModel()" class="toolbar-tooltip" href="#" title="<fmt:message key="jnt_portalToolbar.customize.tooltip"/>" data-placement="left">
+                                                    <i class="icon-edit"></i>
+                                                    <fmt:message key="jnt_portalToolbar.customize"/>
+                                                </a>
+                                            </li>
+                                        </c:when>
+                                        <c:when test="${portalIsCustomizable && userPortal != null}">
+                                            <li>
+                                                <a href="<c:url value="${url.baseLive}${userPortal.path}"/>">
+                                                    <i class="icon-share-alt"></i>
+                                                    <fmt:message key="jnt_portalToolbar.goToMyPortal"/>
+                                                </a>
+                                            </li>
+                                        </c:when>
+                                    </c:choose>
                                 </c:if>
 
                             <li class="divider"></li>

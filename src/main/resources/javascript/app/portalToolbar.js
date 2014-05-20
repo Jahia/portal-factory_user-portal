@@ -1,6 +1,6 @@
 var portalToolbar = angular.module('portalToolbar', []);
 
-portalToolbar.directive('decodehtml', function($timeout) {
+portalToolbar.directive('decodehtml', function() {
     return {
         link: function(scope, element, attrs) {
             setTimeout(function(){
@@ -10,7 +10,7 @@ portalToolbar.directive('decodehtml', function($timeout) {
     };
 });
 
-portalToolbar.controller('widgetsCtrl', function ctrl($scope) {
+portalToolbar.controller('widgetsCtrl', ['$scope', function($scope) {
     $scope.modalId = "";
     $scope.widgets = portal.portalWidgetTypes;
     $scope.desiredName = "";
@@ -42,9 +42,9 @@ portalToolbar.controller('widgetsCtrl', function ctrl($scope) {
     $scope.search = function (widget) {
         return !!((widget.name.toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1 || widget.displayableName.toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1));
     };
-});
+}]);
 
-portalToolbar.controller('tabCtrl', function test($scope) {
+portalToolbar.controller('tabCtrl', ['$scope', function($scope) {
     $scope.modalId = "";
     $scope.edit = false;
     $scope.form = [];
@@ -92,9 +92,9 @@ portalToolbar.controller('tabCtrl', function test($scope) {
 
         return result;
     }
-});
+}]);
 
-portalToolbar.controller('newWidgetsCtrl', function test($scope) {
+portalToolbar.controller('newWidgetsCtrl', ['$scope', function($scope) {
     $scope.modalId = "";
     $scope.newWidgetTypes = [];
 
@@ -103,7 +103,7 @@ portalToolbar.controller('newWidgetsCtrl', function test($scope) {
         $(document).ready(function(){
             $scope.$apply(function(){
                 for(var i = 0; i < portal.portalWidgetTypes.length; i++){
-                    if(portal.portalWidgetTypes[i].new){
+                    if(portal.portalWidgetTypes[i]['new']){
                         $scope.newWidgetTypes.push(portal.portalWidgetTypes[i]);
                         $("#" + modalId).modal();
                     }
@@ -124,9 +124,9 @@ portalToolbar.controller('newWidgetsCtrl', function test($scope) {
         JCRRestUtils.standardCall(url, "PUT",
             JSON.stringify({properties: JCRRestUtils.arrayToDataProperties(data, true)}));
     }
-});
+}]);
 
-portalToolbar.controller('navCtrl', function test($scope) {
+portalToolbar.controller('navCtrl', ['$scope', function($scope) {
     $scope.canBeDeleted = false;
     $scope.tabs = portal.portalTabs;
 
@@ -160,4 +160,4 @@ portalToolbar.controller('navCtrl', function test($scope) {
     $scope.unlock = function(){
         portal.unlockPortal();
     }
-});
+}]);

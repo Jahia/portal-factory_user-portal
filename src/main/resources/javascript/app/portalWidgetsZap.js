@@ -1,6 +1,6 @@
 var portalWidgetsZap = angular.module('portalWidgetsZapApp', []);
 
-portalWidgetsZap.directive('portalWidget', function($timeout) {
+portalWidgetsZap.directive('portalWidget', function() {
     return {
         link: function(scope, element, attrs) {
             var widget = scope.widget;
@@ -15,7 +15,7 @@ portalWidgetsZap.directive('portalWidget', function($timeout) {
             }
 
             element.draggable({
-                connectToSortable: Jahia.Portal.default.sortable_options.connectWith,
+                connectToSortable: Jahia.Portal.defaultConf.sortable_options.connectWith,
                 helper: "clone",
                 revert: "invalid"
             });
@@ -23,7 +23,7 @@ portalWidgetsZap.directive('portalWidget', function($timeout) {
     };
 });
 
-portalWidgetsZap.controller('widgetsCtrl', function ctrl($scope) {
+portalWidgetsZap.controller('widgetsCtrl', ['$scope', function($scope) {
     $scope.widgets = portal.portalWidgetTypes;
     $scope.desiredWidget = "";
     $scope.query = "";
@@ -35,4 +35,4 @@ portalWidgetsZap.controller('widgetsCtrl', function ctrl($scope) {
     $scope.search = function (widget) {
         return !!((widget.name.toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1 || widget.displayableName.toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1));
     };
-});
+}]);

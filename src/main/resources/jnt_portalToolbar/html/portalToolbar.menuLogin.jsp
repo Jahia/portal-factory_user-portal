@@ -220,7 +220,7 @@
                                     <fmt:message key="jnt_portalToolbar.login.profile"/>
                                 </a>
                             </li>
-                            <c:if test="${portalIsModel && jcr:hasPermission(siteNode, 'siteAdminPortalFactory')}">
+                            <c:if test="${jcr:hasPermission(siteNode, 'siteAdminPortalFactory')}">
                                 <li>
                                     <a href="<c:url value='${url.baseEdit}${siteNode.path}.portal-factory.html'/>">
                                         <i class="icon-th-list"></i>

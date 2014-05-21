@@ -7,9 +7,9 @@
 
 [jmix:portalComponentContent] > jmix:droppableContent, jmix:accessControllableContent mixin
 
-[jnt:portalToolbar] > jmix:portalComponentContent, jmix:studioOnly, jnt:content, mix:title
+[jnt:portalToolbar] > jmix:portalComponentContent, jmix:studioOnly, jnt:content, jmix:portalContextWatcher, mix:title
 
-[jnt:portalWidgetsZap] > jmix:portalComponentContent, jmix:studioOnly, jnt:content, mix:title
+[jnt:portalWidgetsZap] > jmix:portalComponentContent, jmix:studioOnly, jnt:content, jmix:portalContextWatcher, mix:title
 
 //---------------------------------------------------------
 // Site components

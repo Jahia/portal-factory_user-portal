@@ -41,7 +41,7 @@
 <template:addResources type="javascript" resources="bootstrap-collapse.js" />
 <template:addResources type="javascript" resources="app/portalToolbar.js" />
 <template:addResources type="css" resources="portal-toolbar.css"/>
-<c:set var="siteNode" value="${renderContext.mainResource.node.resolveSite}"/>
+<c:set var="siteNode" value="${renderContext.site}"/>
 
 <div id="portal_toolbar" class="portal_toolbar">
     <div ng-controller="navCtrl" ng-init="init()">

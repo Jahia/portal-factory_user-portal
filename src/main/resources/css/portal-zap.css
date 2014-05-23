@@ -6,6 +6,13 @@
     height: auto !important;
 }
 
+.empty-area {
+    border: 2px dashed black;
+    visibility: visible !important;
+    height: 50px !important;
+    margin-bottom: 20px;
+}
+
 .zap-menu {
     list-style-type: none;
     margin: 0;

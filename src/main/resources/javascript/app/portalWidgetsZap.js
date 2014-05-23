@@ -17,7 +17,17 @@ portalWidgetsZap.directive('portalWidget', function() {
             element.draggable({
                 connectToSortable: Jahia.Portal.defaultConf.sortable_options.connectWith,
                 helper: "clone",
-                revert: "invalid"
+                revert: "invalid",
+                start: function(){
+                    $(".portal_area").each(function(){
+                        if(!$.trim($(this).html())){
+                            $(this).addClass("empty-area")
+                        }
+                    });
+                },
+                stop: function(){
+                    $(".portal_area").removeClass('empty-area');
+                }
             });
         }
     };

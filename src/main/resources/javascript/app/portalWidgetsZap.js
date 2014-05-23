@@ -35,4 +35,8 @@ portalWidgetsZap.controller('widgetsCtrl', ['$scope', function($scope) {
     $scope.search = function (widget) {
         return !!((widget.name.toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1 || widget.displayableName.toLowerCase().indexOf($scope.query.toLowerCase() || '') !== -1));
     };
+
+    $scope.isNew = function (widget) {
+        return widget['new'];
+    }
 }]);

@@ -31,6 +31,9 @@
 
 <bootstrap:addCSS/>
 <template:addCacheDependency path="${portalContext.path}"/>
+<c:if test="${!portalIsModel}">
+    <template:addCacheDependency path="${portalContext.modelPath}"/>
+</c:if>
 <template:addResources type="javascript" resources="jquery.min.js,jquery-ui.min.js" />
 <template:addResources type="javascript" resources="angular.min.js" />
 <template:addResources type="javascript" resources="bootstrap-alert.js"/>
@@ -44,6 +47,17 @@
 <c:set var="siteNode" value="${renderContext.site}"/>
 
 <div id="portal_toolbar" class="portal_toolbar">
+    <div class="modal hide" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-header">
+            <h1><fmt:message key="jnt_portalToolbar.processing"/></h1>
+        </div>
+        <div class="modal-body">
+            <div class="progress progress-striped active">
+                <div class="bar" style="width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+
     <div ng-controller="navCtrl" ng-init="init()">
         <c:if test="${portalIsModel && portalIsEditable}">
             <div class="alert alert-info">
@@ -85,7 +99,7 @@
                                     </li>
 
                                     <li ng-show="canBeDeleted">
-                                        <a href="#" ng-click="deleteTab()">
+                                        <a href="#" ng-click="deleteTab('<fmt:message key="jnt_portalToolbar.deleteTab.confirm"/>')">
                                             <i class="icon-trash"></i>
                                             <fmt:message key="jnt_portalToolbar.deleteTab.menu"/>
                                         </a>
@@ -127,6 +141,17 @@
                                         </c:when>
                                     </c:choose>
                                 </c:if>
+                            <c:if test="${!portalIsModel and portalIsEditable and portalIsEnabled}">
+                                <li ng-show="isModelExist()">
+                                    <a ng-click="resetPortal('<fmt:message key="jnt_portalToolbar.reset.confirm"/>')"
+                                       class="toolbar-tooltip" href="#"
+                                       title="<fmt:message key="jnt_portalToolbar.reset.tooltip"/>"
+                                       data-placement="left">
+                                        <i class="icon-refresh"></i>
+                                        <fmt:message key="jnt_portalToolbar.reset"/>
+                                    </a>
+                                </li>
+                            </c:if>
 
                             <li class="divider"></li>
                             <c:if test="${jcr:hasPermission(siteNode, 'siteAdminPortalFactory')}">

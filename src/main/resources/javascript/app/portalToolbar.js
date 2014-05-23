@@ -143,8 +143,8 @@ portalToolbar.controller('navCtrl', ['$scope', function($scope) {
         return portal.baseURL + tab.path + ".html";
     };
 
-    $scope.deleteTab = function(){
-        if($scope.canBeDeleted){
+    $scope.deleteTab = function(confirmMessage){
+        if($scope.canBeDeleted && confirm(confirmMessage)){
             portal.deleteCurrentTab();
         }
     };
@@ -153,11 +153,27 @@ portalToolbar.controller('navCtrl', ['$scope', function($scope) {
         portal.initPortalFromModel();
     };
 
+    $scope.resetPortal = function(confirmMessage){
+        if(confirm(confirmMessage)){
+            $("#pleaseWaitDialog").modal();
+
+            Jahia.Utils.ajaxJahiaActionCall(portal.baseURL + portal.portalPath, ".resetPortal.do", "POST", null, function () {
+                window.location.href = portal.baseURL + portal.portalPath;
+            }, function(){
+                $("#pleaseWaitDialog").modal('hide');
+            });
+        }
+    };
+
     $scope.lock = function(){
         portal.lockPortal();
     };
 
     $scope.unlock = function(){
         portal.unlockPortal();
+    };
+
+    $scope.isModelExist = function(){
+        return !portal.isModel && portal.portalModelPath;
     }
 }]);

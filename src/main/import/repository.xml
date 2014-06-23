@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <content xmlns:j="http://www.jahia.org/jahia/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0">
     <modules jcr:primaryType="jnt:modules">
-        <portal-factory_user-portal j:dependencies="bootstrap default portal-factory_core"
+        <portal-user-portal j:dependencies="bootstrap default portal-core"
                                   j:modulePriority="0"
                         j:moduleType="module"
                         j:title="Portal factory - user portal"
@@ -15,6 +15,6 @@
                     <contents jcr:primaryType="jnt:contentFolder"/>
                 </templates>
                 
-            </portal-factory_user-portal>
+            </portal-user-portal>
     </modules>
 </content>

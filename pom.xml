@@ -81,7 +81,7 @@
   </parent>
   <groupId>org.jahia.modules</groupId>
   <artifactId>portal-user-portal</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>Portal factory - user portal</name>
   <description>This is the custom module (portal factory - user portal) for running on a Jahia xCM server.</description>

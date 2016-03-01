@@ -34,7 +34,8 @@
 <c:if test="${!portalIsModel}">
     <template:addCacheDependency path="${portalContext.modelPath}"/>
 </c:if>
-<template:addResources type="javascript" resources="jquery.min.js,jquery-ui.min.js" />
+<template:addResources type="javascript" resources="jquery.min.js" />
+<template:addResources type="javascript" resources="portal/jquery-ui.min.js" />
 <template:addResources type="javascript" resources="portal/vendor/angular.min.js" />
 <template:addResources type="javascript" resources="bootstrap-alert.js"/>
 <template:addResources type="javascript" resources="bootstrap-dropdown.js"/>

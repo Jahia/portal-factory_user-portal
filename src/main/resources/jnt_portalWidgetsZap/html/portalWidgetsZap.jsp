@@ -21,7 +21,8 @@
 <%--@elvariable id="nodetype" type="org.jahia.services.content.nodetypes.ExtendedNodeType"--%>
 <%--@elvariable id="portalContext" type="org.jahia.modules.portal.service.bean.PortalContext"--%>
 
-<template:addResources type="javascript" resources="jquery.min.js,jquery-ui.min.js" />
+<template:addResources type="javascript" resources="jquery.min.js" />
+<template:addResources type="javascript" resources="portal/jquery-ui.min.js" />
 <template:addResources type="javascript" resources="portal/vendor/jquery.tabSlideOut.v1.3.js" />
 <template:addResources type="javascript" resources="portal/vendor/angular.min.js" />
 <template:addResources type="javascript" resources="portal/app/portalWidgetsZap.js" />
@@ -85,17 +86,17 @@
 
 
         <c:if test="${portalIsEditable && !portalIsLocked}">
-        <div id="portalWidgetsZap" class="visible-desktop" ng-controller="widgetsCtrl" ng-init="init()">
-            <a class="handle" href="http://link-for-non-js-users.html">Content</a>
-            <div class="row-fluid">
-                <input class="span12" ng-model="query" type="text" placeholder="Search...">
-                <ul class="zap-menu">
-                    <li ng-repeat="widget in widgets | filter: search" portal-widget>
-                        <span><i class="fa fa-chevron-right"></i>&nbsp;{{widget.displayableName}} <i ng-show="isNew(widget)" class="pull-right fa fa-star color-blue"></i></span>
-                    </li>
-                </ul>
+            <div id="portalWidgetsZap" class="visible-desktop" ng-controller="widgetsCtrl" ng-init="init()">
+                <a class="handle" href="http://link-for-non-js-users.html">Content</a>
+                <div class="row-fluid">
+                    <input class="span12" ng-model="query" type="text" placeholder="Search...">
+                    <ul class="zap-menu">
+                        <li ng-repeat="widget in widgets | filter: search" portal-widget>
+                            <span><i class="fa fa-chevron-right"></i>&nbsp;{{widget.displayableName}} <i ng-show="isNew(widget)" class="pull-right fa fa-star color-blue"></i></span>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
             <script type="text/javascript">
                 // Boostrap app

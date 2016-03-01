@@ -51,7 +51,7 @@ portalToolbar.controller('tabCtrl', ['$scope', function($scope) {
     $scope.init = function (type, modalId) {
         $scope.modalId = modalId;
         $scope.edit = (type && type == "edit");
-        $('#' + modalId).on('show.bs.modal', function () {
+        angular.element('#' + modalId).on('show.bs.modal', function () {
             $scope.$apply(function() {
                 $scope.form = {
                     name: $scope.edit ? $("<div></div>").html(portal.portalCurrentTab.displayableName).text() : '',
@@ -60,7 +60,7 @@ portalToolbar.controller('tabCtrl', ['$scope', function($scope) {
                     accessibility: portal.portalCurrentTab.accessibility,
                     allowedTemplates: portal.portalTabTemplates,
                     allowedWidgetsSkins: portal.portalTabSkins
-                }
+                };
             });
         });
     };
@@ -129,7 +129,7 @@ portalToolbar.controller('navCtrl', ['$scope', function($scope) {
 
     $scope.init = function () {
         $scope.canBeDeleted = portal.portalTabs.length > 1;
-        $('[data-toggle="tooltip"]').tooltip({
+        angular.element('[data-toggle="tooltip"]').tooltip({
             container: "body"
         });
     };

@@ -22,9 +22,9 @@
 <%--@elvariable id="portalContext" type="org.jahia.modules.portal.service.bean.PortalContext"--%>
 
 <template:addResources type="javascript" resources="jquery.min.js,jquery-ui.min.js" />
-<template:addResources type="javascript" resources="jquery.tabSlideOut.v1.3.js" />
-<template:addResources type="javascript" resources="angular.min.js" />
-<template:addResources type="javascript" resources="app/portalWidgetsZap.js" />
+<template:addResources type="javascript" resources="portal/vendor/jquery.tabSlideOut.v1.3.js" />
+<template:addResources type="javascript" resources="portal/vendor/angular.min.js" />
+<template:addResources type="javascript" resources="portal/app/portalWidgetsZap.js" />
 <template:addResources type="css" resources="portal-zap.css"/>
 
 <script>

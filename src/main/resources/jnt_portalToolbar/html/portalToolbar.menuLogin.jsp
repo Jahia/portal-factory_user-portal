@@ -35,14 +35,14 @@
     <template:addCacheDependency path="${portalContext.modelPath}"/>
 </c:if>
 <template:addResources type="javascript" resources="jquery.min.js,jquery-ui.min.js" />
-<template:addResources type="javascript" resources="angular.min.js" />
+<template:addResources type="javascript" resources="portal/vendor/angular.min.js" />
 <template:addResources type="javascript" resources="bootstrap-alert.js"/>
 <template:addResources type="javascript" resources="bootstrap-dropdown.js"/>
 <template:addResources type="javascript" resources="bootstrap-modal.js"/>
 <template:addResources type="javascript" resources="bootstrap-transition.js"/>
 <template:addResources type="javascript" resources="bootstrap-tooltip.js" />
 <template:addResources type="javascript" resources="bootstrap-collapse.js" />
-<template:addResources type="javascript" resources="app/portalToolbar.js" />
+<template:addResources type="javascript" resources="portal/app/portalToolbar.js" />
 <template:addResources type="css" resources="portal-toolbar.css"/>
 <c:set var="siteNode" value="${renderContext.site}"/>
 
@@ -210,7 +210,7 @@
                                 <c:choose>
                                     <c:when test="${portalIsCustomizable && userPortal == null}">
                                         <li>
-                                            <a ng-click="copyModel()" class="toolbar-tooltip" href="#" title="<fmt:message key="jnt_portalToolbar.customize.tooltip"/>" data-placement="left">
+                                            <a ng-click="copyModel()" data-toggle="tooltip" href="#" title="<fmt:message key="jnt_portalToolbar.customize.tooltip"/>" data-placement="left">
                                                 <i class="icon-edit"></i>
                                                 <fmt:message key="jnt_portalToolbar.customize"/>
                                             </a>
@@ -229,7 +229,7 @@
                             <c:if test="${!portalIsModel and portalIsEditable and portalIsEnabled}">
                                 <li ng-show="isModelExist()">
                                     <a ng-click="resetPortal('<fmt:message key="jnt_portalToolbar.reset.confirm"/>')"
-                                       class="toolbar-tooltip" href="#"
+                                       data-toggle="tooltip" href="#"
                                        title="<fmt:message key="jnt_portalToolbar.reset.tooltip"/>"
                                        data-placement="left">
                                         <i class="icon-refresh"></i>

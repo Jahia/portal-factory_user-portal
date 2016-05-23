@@ -34,15 +34,16 @@
 <c:if test="${!portalIsModel}">
     <template:addCacheDependency path="${portalContext.modelPath}"/>
 </c:if>
-<template:addResources type="javascript" resources="jquery.min.js,jquery-ui.min.js" />
-<template:addResources type="javascript" resources="angular.min.js" />
+<template:addResources type="javascript" resources="jquery.min.js" />
+<template:addResources type="javascript" resources="portal/jquery-ui.min.js" />
+<template:addResources type="javascript" resources="portal/vendor/angular.min.js" />
 <template:addResources type="javascript" resources="bootstrap-alert.js"/>
 <template:addResources type="javascript" resources="bootstrap-dropdown.js"/>
 <template:addResources type="javascript" resources="bootstrap-modal.js"/>
 <template:addResources type="javascript" resources="bootstrap-transition.js"/>
 <template:addResources type="javascript" resources="bootstrap-tooltip.js" />
 <template:addResources type="javascript" resources="bootstrap-collapse.js" />
-<template:addResources type="javascript" resources="app/portalToolbar.js" />
+<template:addResources type="javascript" resources="portal/app/portalToolbar.js" />
 <template:addResources type="css" resources="portal-toolbar.css"/>
 <c:set var="siteNode" value="${renderContext.site}"/>
 
@@ -62,13 +63,13 @@
         <c:if test="${portalIsModel && portalIsEditable}">
             <div class="alert alert-info">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Warning!</strong> <fmt:message key="jnt_portalToolbar.model.editable"/>
+                <strong><fmt:message key="jnt.label.warning"/>!</strong> <fmt:message key="jnt_portalToolbar.model.editable"/>
             </div>
         </c:if>
         <c:if test="${portalIsModel && !portalIsEditable && portalIsCustomizable}">
             <div class="alert alert-info">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Warning!</strong> <fmt:message key="jnt_portalToolbar.model.notEditable"/>
+                <strong><fmt:message key="jnt.label.warning"/>!</strong> <fmt:message key="jnt_portalToolbar.model.notEditable"/>
             </div>
         </c:if>
 
@@ -123,16 +124,17 @@
                                     </p>
 
                                     <p class="text-right">
-                                        <button class="btn btn-primary"><i class="icon-ok icon-white"></i> <fmt:message
-                                                key='jnt_portalToolbar.login.title'/>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="icon-ok icon-white"></i>
+                                            <fmt:message key='jnt_portalToolbar.login.title'/>
                                         </button>
                                     </p>
 
                                 </ui:loginArea>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true"><i
-                                        class="icon-remove icon-white"></i> Close
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">
+                                    <i class="icon-remove icon-white"></i> <fmt:message key="cancel"/>
                                 </button>
                             </div>
                         </div>
@@ -210,7 +212,7 @@
                                 <c:choose>
                                     <c:when test="${portalIsCustomizable && userPortal == null}">
                                         <li>
-                                            <a ng-click="copyModel()" class="toolbar-tooltip" href="#" title="<fmt:message key="jnt_portalToolbar.customize.tooltip"/>" data-placement="left">
+                                            <a ng-click="copyModel()" data-toggle="tooltip" href="#" title="<fmt:message key="jnt_portalToolbar.customize.tooltip"/>" data-placement="left">
                                                 <i class="icon-edit"></i>
                                                 <fmt:message key="jnt_portalToolbar.customize"/>
                                             </a>
@@ -229,7 +231,7 @@
                             <c:if test="${!portalIsModel and portalIsEditable and portalIsEnabled}">
                                 <li ng-show="isModelExist()">
                                     <a ng-click="resetPortal('<fmt:message key="jnt_portalToolbar.reset.confirm"/>')"
-                                       class="toolbar-tooltip" href="#"
+                                       data-toggle="tooltip" href="#"
                                        title="<fmt:message key="jnt_portalToolbar.reset.tooltip"/>"
                                        data-placement="left">
                                         <i class="icon-refresh"></i>
@@ -273,24 +275,33 @@
         <script type="text/ng-template" id="tabFormTemplate">
             <form class="form-horizontal">
                 <div class="control-group">
-                    <label class="control-label"><fmt:message key="jnt_portalToolbar.tabForm.name"/>:&nbsp; </label><input type="text" ng-model="form.name" required>
+                    <label class="control-label"><fmt:message key="jnt_portalToolbar.tabForm.name"/></label>
+                    <div class="controls">
+                        <input type="text" ng-model="form.name" required>
+                    </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label"><fmt:message key="jnt_portalToolbar.tabForm.template"/>:&nbsp; </label>
-                    <select ng-model='form.template' required ng-options='option.key as option.name for option in form.allowedTemplates'></select>
+                    <label class="control-label"><fmt:message key="jnt_portalToolbar.tabForm.template"/></label>
+                    <div class="controls">
+                        <select ng-model='form.template' required ng-options='option.key as option.name for option in form.allowedTemplates'></select>
+                    </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label"><fmt:message key="jnt_portalToolbar.tabForm.widgetsSkin"/>:&nbsp; </label>
-                    <select ng-model='form.widgetSkin' required ng-options='option.key as option.name for option in form.allowedWidgetsSkins'></select>
+                    <label class="control-label"><fmt:message key="jnt_portalToolbar.tabForm.widgetsSkin"/></label>
+                    <div class="controls">
+                        <select ng-model='form.widgetSkin' required ng-options='option.key as option.name for option in form.allowedWidgetsSkins'></select>
+                    </div>
                 </div>
                 <c:if test="${!portalIsModel}">
                     <div class="control-group">
-                        <label class="control-label"><fmt:message key="jnt_portalToolbar.tabForm.accessibility"/>:&nbsp; </label>
-                        <select ng-model='form.accessibility'>
-                            <option value="me"><fmt:message key="jnt_portalToolbar.tabForm.accessibility.me"/></option>
-                            <option value="users"><fmt:message key="jnt_portalToolbar.tabForm.accessibility.users"/></option>
-                            <option value="all"><fmt:message key="jnt_portalToolbar.tabForm.accessibility.all"/></option>
-                        </select>
+                        <label class="control-label"><fmt:message key="jnt_portalToolbar.tabForm.accessibility"/></label>
+                        <div class="controls">
+                            <select ng-model='form.accessibility'>
+                                <option value="me"><fmt:message key="jnt_portalToolbar.tabForm.accessibility.me"/></option>
+                                <option value="users"><fmt:message key="jnt_portalToolbar.tabForm.accessibility.users"/></option>
+                                <option value="all"><fmt:message key="jnt_portalToolbar.tabForm.accessibility.all"/></option>
+                            </select>
+                        </div>
                     </div>
                 </c:if>
             </form>
@@ -301,38 +312,39 @@
              ng-init="init('widgetsModal')">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">×</button>
-                <h3 id="widgetModalLabel"><fmt:message key="jnt_portalToolbar.addTab.menu"/></h3>
+                <h3 id="widgetModalLabel"><fmt:message key="jnt_portalToolbar.addWidget.menu"/></h3>
             </div>
             <div class="modal-body">
-                <form class="form-inline" role="form" name="widgetForm">
-                    <div class="form-group row-fluid">
-                        <div class="span4">
-                            <label for="widget_desiredName"><fmt:message key="jnt_portalToolbar.addWidgetForm.name"/>:</label>
+                <form class="form-horizontal" role="form" name="widgetForm">
+                    <div class="control-group">
+                        <label class="control-label" for="widget_desiredName"><fmt:message key="jnt_portalToolbar.addWidgetForm.name"/></label>
+                        <div class="controls">
+                            <input class="input-block-level" id="widget_desiredName" ng-model="desiredName" type="text">
                         </div>
-                        <input id="widget_desiredName" class="span8 right" ng-model="desiredName" type="text">
                     </div>
 
-                    <div class="form-group row-fluid">
-
-                        <div class="span4">
-                            <label><fmt:message key="jnt_portalToolbar.addWidgetForm.type"/>:</label>
+                    <div class="control-group">
+                        <label class="control-label"><fmt:message key="jnt_portalToolbar.addWidgetForm.type"/></label>
+                        <div class="controls">
+                            <input ng-model="query" type="text" placeholder="Search...">
+                            <input type="hidden" ng-model="desiredWidget" required/>
                         </div>
-                        <input class="span5 right" ng-model="query" type="text" placeholder="Search...">
-                        <input type="hidden" ng-model="desiredWidget" required/>
                     </div>
 
-                    <table class="table table-bordered widgets-table">
-                        <tbody>
-                            <tr ng-repeat="widget in widgets | filter: search" ng-class="desiredWidget.name == widget.name ? 'active' : ''">
-                                <td colspan="2" ng-click="selectWidget(widget)">{{widget.displayableName}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="control-group">
+                        <table class="table table-bordered widgets-table">
+                            <tbody>
+                                <tr ng-repeat="widget in widgets | filter: search" ng-class="desiredWidget.name == widget.name ? 'active' : ''">
+                                    <td colspan="2" ng-click="selectWidget(widget)">{{widget.displayableName}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" ng-click="cancel()"><fmt:message key="cancel"/></button>
-                <button class="btn btn-primary" ng-disabled="widgetForm.$invalid" ng-click="addWidget()"><fmt:message key="add"/></button>
+                <button type="button" class="btn" data-dismiss="modal" ng-click="cancel()"><fmt:message key="cancel"/></button>
+                <button type="button" class="btn btn-primary" ng-disabled="widgetForm.$invalid" ng-click="addWidget()"><fmt:message key="add"/></button>
             </div>
         </div>
 
@@ -350,8 +362,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" ng-click="cancel()"><fmt:message key="cancel"/></button>
-                <button class="btn btn-primary" ng-click="submit(false)"><fmt:message key="save"/></button>
+                <button type="button" class="btn" data-dismiss="modal" ng-click="cancel()"><fmt:message key="cancel"/></button>
+                <button type="button" class="btn btn-primary" ng-click="submit(false)"><fmt:message key="save"/></button>
             </div>
         </div>
 
@@ -369,8 +381,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" ng-click="cancel()"><fmt:message key="cancel"/></button>
-                <button class="btn btn-primary" ng-click="submit(true)"><fmt:message key="add"/></button>
+                <button type="button" class="btn" data-dismiss="modal" ng-click="cancel()"><fmt:message key="cancel"/></button>
+                <button type="button" class="btn btn-primary" ng-click="submit(true)"><fmt:message key="add"/></button>
             </div>
         </div>
 
@@ -388,7 +400,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" ng-click="ok()">Ok</button>
+                <button type="button" class="btn" data-dismiss="modal" ng-click="ok()">Ok</button>
             </div>
         </div>
     </c:if>

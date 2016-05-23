@@ -34,7 +34,6 @@ portalToolbar.controller('widgetsCtrl', ['$scope', function($scope) {
     };
 
     $scope.cancel = function () {
-        $('#' + $scope.modalId).modal('hide');
         $scope.desiredName = "";
         $scope.desiredWidget = null;
     };
@@ -52,8 +51,8 @@ portalToolbar.controller('tabCtrl', ['$scope', function($scope) {
     $scope.init = function (type, modalId) {
         $scope.modalId = modalId;
         $scope.edit = (type && type == "edit");
-        $('#' + modalId).on('show', function () {
-            $scope.$apply(function(){
+        angular.element('#' + modalId).on('show.bs.modal', function () {
+            $scope.$apply(function() {
                 $scope.form = {
                     name: $scope.edit ? $("<div></div>").html(portal.portalCurrentTab.displayableName).text() : '',
                     template: portal.portalCurrentTab.templateKey,
@@ -61,13 +60,12 @@ portalToolbar.controller('tabCtrl', ['$scope', function($scope) {
                     accessibility: portal.portalCurrentTab.accessibility,
                     allowedTemplates: portal.portalTabTemplates,
                     allowedWidgetsSkins: portal.portalTabSkins
-                }
+                };
             });
         });
     };
 
     $scope.cancel = function () {
-        $('#' + $scope.modalId).modal('hide');
         $scope.form = [];
     };
 
@@ -105,7 +103,6 @@ portalToolbar.controller('newWidgetsCtrl', ['$scope', function($scope) {
                 for(var i = 0; i < portal.portalWidgetTypes.length; i++){
                     if(portal.portalWidgetTypes[i]['new']){
                         $scope.newWidgetTypes.push(portal.portalWidgetTypes[i]);
-                        $("#" + modalId).modal();
                     }
                 }
             });
@@ -132,7 +129,9 @@ portalToolbar.controller('navCtrl', ['$scope', function($scope) {
 
     $scope.init = function () {
         $scope.canBeDeleted = portal.portalTabs.length > 1;
-        $(".toolbar-tooltip").tooltip();
+        angular.element('[data-toggle="tooltip"]').tooltip({
+            container: "body"
+        });
     };
 
     $scope.isCurrentTab = function (tab) {
@@ -154,13 +153,9 @@ portalToolbar.controller('navCtrl', ['$scope', function($scope) {
     };
 
     $scope.resetPortal = function(confirmMessage){
-        if(confirm(confirmMessage)){
-            $("#pleaseWaitDialog").modal();
-
+        if (confirm(confirmMessage)) {
             Jahia.Utils.ajaxJahiaActionCall(portal.baseURL + portal.portalPath, ".resetPortal.do", "POST", null, function () {
                 window.location.href = portal.baseURL + portal.portalPath;
-            }, function(){
-                $("#pleaseWaitDialog").modal('hide');
             });
         }
     };

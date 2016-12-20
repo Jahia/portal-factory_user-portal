@@ -60,7 +60,7 @@
     <c:when test="${renderContext.mode == 'studiovisual'}">
         <div id="portalWidgetsZap">
             <a class="handle" href="http://link-for-non-js-users.html">Content</a>
-                <input class="span5 right" type="text" placeholder="Search...">
+                <input class="form-control right" type="text" placeholder="Search...">
 
                 <ul>
                     <li>
@@ -88,18 +88,20 @@
         <c:if test="${portalIsEditable && !portalIsLocked}">
             <div id="portalWidgetsZap" class="visible-desktop" ng-controller="widgetsCtrl" ng-init="init()">
                 <a class="handle" href="http://link-for-non-js-users.html">Content</a>
-                <div class="row-fluid">
-                    <input class="span12" ng-model="query" type="text" placeholder="Search...">
-                    <ul class="zap-menu">
-                        <li ng-repeat="widget in widgets | filter: search" portal-widget>
-                            <span><i class="fa fa-chevron-right"></i>&nbsp;{{widget.displayableName}} <i ng-show="isNew(widget)" class="pull-right fa fa-star color-blue"></i></span>
-                        </li>
-                    </ul>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input class="form-control" ng-model="query" type="text" placeholder="Search...">
+                        <ul class="zap-menu">
+                            <li ng-repeat="widget in widgets | filter: search" portal-widget>
+                                <span><i class="fa fa-chevron-right"></i>&nbsp;{{widget.displayableName}} <i ng-show="isNew(widget)" class="pull-right fa fa-star color-blue"></i></span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
             <script type="text/javascript">
-                // Boostrap app
+                // Bootstrap app
                 angular.bootstrap(document.getElementById("portalWidgetsZap"),['portalWidgetsZapApp']);
             </script>
         </c:if>

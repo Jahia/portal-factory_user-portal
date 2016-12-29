@@ -44,7 +44,8 @@
         please contact the sales department at sales@jahia.com.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jahia.modules</groupId>
@@ -61,13 +62,10 @@
     <connection>scm:git:git@github.com:Jahia/portal-user-portal.git</connection>
     <developerConnection>scm:git:git@github.com:Jahia/portal-user-portal.git</developerConnection>
     <url>scm:git:git@github.com:Jahia/portal-user-portal.git</url>
-    <tag>HEAD</tag>
   </scm>
-
-    <properties>
-        <jahia-depends>default,bootstrap3-core,portal-core</jahia-depends>
-    </properties>
-
+  <properties>
+    <jahia-depends>default,bootstrap3-core,portal-core</jahia-depends>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.jahia.modules</groupId>
@@ -102,4 +100,13 @@
       <url>https://devtools.jahia.com/nexus/content/groups/public</url>
     </repository>
   </repositories>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
